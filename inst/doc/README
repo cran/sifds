@@ -1,0 +1,107 @@
+TITLE:   sifds: Swedish Inflation Forecast Data Set 
+         1999:Q2--2005:Q2
+AUTHOR:  Michael Lundholm
+CONTACT: michael.lundholm@ne.su.se
+
+The project presumes that the following directory 
+structure exists in the project root directory:
+
+sifds
+sifds/R
+sifds/data
+sifds/inst
+sifds/inst/extdata
+sifds/inst/doc
+sifds/man
+
+The project files consists of
+
+     * README (THIS FILE)
+     * sifds.ins (DOCSTRIP INSTALLATION FILE)
+     * script (BASH SCRIPT FILE)
+     * sifds_source.rnw (MAIN CODE FILE)
+     * sifds/inst/extdata/ki.xls (DATA FILE)
+
+where the first three files should be in the project 
+root directory. These files and the appropriate software 
+together produce the sifds R package, its documentation 
+and vignette.
+
+The DOCSTRIP INSTALLATION FILE should have the following 
+content:
+
+\input docstrip.tex
+\keepsilent
+\askforoverwritefalse
+\nopreamble
+\nopostamble
+\generate{
+\file{sifds.rnw}{
+     \from{sifds_source.rnw}{paper}}
+\file{package.rnw}{
+     \from{sifds_source.rnw}{code}}
+\file{sifds.bib}{
+     \from{sifds_source.rnw}{bib}}
+\file{sifds/man/sifds-package.Rd}{
+     \from{sifds_source.rnw}{sifds-package}}
+\file{sifds/man/rb.cpi.errors.Rd}{
+     \from{sifds_source.rnw}{rbcpi}}
+\file{sifds/man/rb.kpix.errors.Rd}{
+     \from{sifds_source.rnw}{rbkpix}}
+\file{sifds/man/ki.cpi.errors.Rd}{
+     \from{sifds_source.rnw}{kicpi}}
+\file{sifds/man/ki.kpix.errors.Rd}{
+     \from{sifds_source.rnw}{kikpix}}
+\file{sifds/man/rb.Rd}{
+     \from{sifds_source.rnw}{rb}}
+\file{sifds/man/ki.Rd}{
+     \from{sifds_source.rnw}{ki}}
+\file{sifds/man/cpi.outcome.Rd}{
+     \from{sifds_source.rnw}{cpioutcome}}
+\file{sifds/man/kpix.outcome.Rd}{
+     \from{sifds_source.rnw}{kpixoutcome}}
+\file{DESCRIPTION}{
+     \from{sifds_source.rnw}{DESCRIPTION}}
+\file{sifds/inst/extdata/PR0101D3.txt}{
+     \from{sifds_source.rnw}{PR0101D3}}
+\file{sifds/inst/extdata/PR0101D5.txt}{
+     \from{sifds_source.rnw}{PR0101D5}}
+}
+\endbatchfile
+
+The BASH SCRIPT FILE should contain the following
+commands:
+
+latex sifds.ins
+R CMD Sweave sifds.rnw
+R CMD Stangle package.rnw
+mv package.R sifds/R/package.R
+mv DESCRIPTION.tex sifds/DESCRIPTION
+pdflatex sifds.tex
+bibtex sifds
+pdflatex sifds.tex
+pdflatex sifds.tex
+mv sifds.pdf tmp.pdf
+gs -q -r2400 -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=sifds.pdf -f  tmp.pdf sifds.Rcheck/sifds-manual.pdf
+cp sifds.pdf sifds/inst/doc/sifds.pdf
+cp sifds_source.rnw sifds/inst/doc/sifds_source.rnw
+R CMD build sifds
+R CMD check sifds
+
+Accordingly MAIN CODE FILE contains three levels of markup
+1. noweb markup to define the code chunks evaluated
+   when "sifds_source.rnw" is run through R via Sweave.
+2. DOCSTRIP markup to define the conditional LaTeX code
+   to be shipped to the different generated LaTeX files.
+   Conditioning is made on the a number of tags which contains
+   the code of various code files and data files which are 
+   created when "latex sifds.ins" is run.
+3. Standard LaTeX markup to be considered when the
+   generated LaTeX files are run with latex/pdflatex.
+
+The DATA FILE is the only data file distrubted since it is the only 
+file in binary format that is not available on the Internet. All
+other data files are either contained in the MAIN CODE FILE or are
+downloaded from the internet. The resulting R package sifds contains all
+these data files.
+
