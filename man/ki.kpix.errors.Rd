@@ -1,6 +1,5 @@
 \name{ki.kpix.errors}
 \alias{ki.kpix.errors}
-\docType{function}
 \title{Generates forecast errors for the KI forecasts for KPIX}
 \description{Generates a sequence of 18forecast errors 2001:Q1-2005:Q2 for the KI forecasts for KPIX for a forecast horizon 1-21 months ahead. The default horizon is one month.}
 \usage{ki.kpix.errors(horizon=1)}

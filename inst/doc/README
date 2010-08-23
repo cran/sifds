@@ -62,12 +62,13 @@ content:
      \from{sifds_source.rnw}{kpixoutcome}}
 \file{DESCRIPTION}{
      \from{sifds_source.rnw}{DESCRIPTION}}
-\file{sifds/inst/extdata/PR0101D3.txt}{
+\file{sifds/inst/extdata/PR0101D3.scb}{
      \from{sifds_source.rnw}{PR0101D3}}
-\file{sifds/inst/extdata/PR0101D5.txt}{
+\file{sifds/inst/extdata/PR0101D5.scb}{
      \from{sifds_source.rnw}{PR0101D5}}
 }
 \endbatchfile
+
 
 The BASH SCRIPT FILE should contain the following
 commands:
@@ -84,7 +85,7 @@ pdflatex sifds.tex
 mv sifds.pdf tmp.pdf
 gs -q -r2400 -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=sifds.pdf -f  tmp.pdf sifds.Rcheck/sifds-manual.pdf
 cp sifds.pdf sifds/inst/doc/sifds.pdf
-cp sifds_source.rnw sifds/inst/doc/sifds_source.rnw
+cp README sifds/inst/doc/README
 R CMD build sifds
 R CMD check sifds
 

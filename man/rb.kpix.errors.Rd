@@ -1,6 +1,5 @@
 \name{rb.kpix.errors}
 \alias{rb.kpix.errors}
-\docType{function}
 \title{Generates forecast errors for the RB forecasts for KPIX}
 \description{Generates a sequence of 25 forecast errors 1999:Q2-2005:Q2 for the RB forecasts for KPIX for a forecast horizon 1-25 months ahead. The default horizon is one month.}
 \usage{rb.kpix.errors(horizon=1)}
